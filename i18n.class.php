@@ -2,7 +2,8 @@
 /**
  * unit-i18n:/i18n.class.php
  *
- * @creation  2018-07-11
+ * @created   2018-07-11
+ * @updated   2019-04-08  op-app-skeleton-2019-nep
  * @version   1.0
  * @package   unit-i18n
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
@@ -15,6 +16,16 @@
  */
 namespace OP\UNIT;
 
+/** Used class
+ *
+ */
+use Exception;
+use OP\OP_CORE;
+use OP\OP_UNIT;
+use OP\IF_UNIT;
+use OP\Env;
+use OP\Notice;
+
 /** i18n
  *
  * @creation  2018-07-11
@@ -23,12 +34,12 @@ namespace OP\UNIT;
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
-class i18n
+class i18n implements IF_UNIT
 {
 	/** trait
 	 *
 	 */
-	use \OP_CORE;
+	use OP_CORE, OP_UNIT;
 
 	/** Database table name.
 	 *
@@ -78,6 +89,8 @@ class i18n
 
 	/** To hash
 	 *
+	 * This hash is has not been separate each App.
+	 *
 	 * @param	 string	 $str
 	 * @return	 string	 $hash
 	 */
@@ -92,26 +105,39 @@ class i18n
 	function __construct()
 	{
 		//	...
-		if(!$config = \Env::Get('i18n') ){
-			throw new \Exception('Has not been set i18n config.');
+		if(!$config = Env::Get('i18n') ){
+			throw new Exception('Has not been set i18n config.');
 
 		}
-
-		//	...
-		if(!$this->_DB = \Unit::Instance('Database') ){
-			throw new \Exception('Instantiate Database object was failed.');
-		}
-
-		//	...
-		if(!$this->_DB->Connect($config['database']) ){
-			throw new \Exception('Connect database was failed.');
-		};
 
 		//	...
 		$this->_to      = $config['locale-to']   ?? null;
 		$this->_from    = $config['locale-from'] ?? null;
 		$this->_service = $config['service']     ?? null;
 		$this->_apikey  = $config['api-key']     ?? null;
+	}
+
+	/** Get Database Object.
+	 *
+	 * @return \OP\UNIT\Database
+	 */
+	function _DB()
+	{
+		//	...
+		if(!$this->_DB ){
+			//	...
+			if(!$this->_DB = $this->Unit('Database') ){
+				throw new Exception('Instantiate Database object was failed.');
+			};
+
+			//	...
+			if(!$this->_DB->Connect(Env::Get('i18n')['database']) ){
+				throw new Exception('Connect database was failed.');
+			};
+		};
+
+		//	...
+		return $this->_DB;
 	}
 
 	/** Set to locale.
@@ -151,6 +177,84 @@ class i18n
 		return $this->_service = $service;
 	}
 
+	/** Language
+	 *
+	 * @created  2019-04-15
+	 * @param    string      $locale
+	 * @return   array
+	 */
+	function Language($locale)
+	{
+		//	...
+		if(!$_DB = $this->_DB() ){
+			return;
+		}
+
+		//	...
+		if(!$_DB->isConnect() ){
+			return;
+		};
+
+		//	...
+		if(!$locale ){
+			Notice::Set("Locale is empty.");
+			return [];
+		};
+
+		//	...
+		$table = self::_table_;
+
+		//	...
+		$hash = $this->_Hash( strtolower($locale) );
+
+		//	...
+		if( $json = $_DB->Quick(" translated <- {$table}.hash = {$hash} ", ['limit'=>1]) ){
+			$data = json_decode($json, true);
+		}else{
+			//	...
+			list($lang, $country) = explode(':', $locale);
+
+			//	...
+			$data = $this->Unit( ucfirst($this->_service) )->Language($lang);
+
+			//	...
+			if( empty($data) ){
+				Notice::Set("Data is empty.");
+				return [];
+			};
+
+			//	...
+			if(!$_DB = $this->_DB() ){
+				return;
+			}
+
+			//	...
+			if(!$_DB->isConnect() ){
+				return;
+			};
+
+			//	...
+			$config = [
+				'table' => $table,
+				'set' => [
+					'hash'         => $hash,
+					'from_lang'    => 'en',
+					'from_country' => 'us',
+					'to_lang'      => $lang,
+					'to_country'   => $country,
+					'original'     => '',
+					'translated'   => json_encode($data),
+				],
+			];
+
+			//	...
+			$_DB->Insert($config);
+		}
+
+		//	...
+		return $data;
+	}
+
 	/** Translate
 	 *
 	 * @param	 string	 $string
@@ -159,12 +263,12 @@ class i18n
 	function Translate($string)
 	{
 		//	...
-		if(!$this->_DB){
+		if(!$_DB = $this->_DB() ){
 			return;
 		}
 
 		//	...
-		if(!$this->_DB->isConnect() ){
+		if(!$_DB->isConnect() ){
 			return;
 		};
 
@@ -175,26 +279,30 @@ class i18n
 		$table = self::_table_;
 
 		//	...
-		$translated = $this->_DB->Quick(" translated <- {$table}.hash = {$hash} ", ['limit'=>1]);
+		$translated = $_DB->Quick(" translated <- {$table}.hash = {$hash} ", ['limit'=>1]);
 
 		//	...
 		if(!$translated ){
-			/* @var $google \OP\UNIT\Google */
-			if(!$google = \Unit::Singleton('Google') ){
+			if(!$google = $this->Unit('Google') ){
 				return;
 			}
 
 			//	...
-			list($from_lang, $from_country) = explode('-', $this->_from.'-');
-			list($to_lang,   $to_country  ) = explode('-', $this->_to  .'-');
+			list($from_lang, $from_country) = explode(':', $this->_from.':');
+			list($to_lang,   $to_country  ) = explode(':', $this->_to  .':');
 
 			//	...
-			$translated = $google->Translate($to_lang, $from_lang, [$string], $this->_apikey);
-
-			//	...
-			if( empty($translated[0]) ){
+			if( $to_lang === $from_lang ){
 				return $string;
-			}
+			};
+
+			//	...
+			$translated = $google->Translate($to_lang, $from_lang, [$string], $this->_apikey)[0] ?? null;
+
+			//	...
+			if(!$translated ){
+				return $string;
+			};
 
 			//	...
 			$insert = [
@@ -211,7 +319,7 @@ class i18n
 			];
 
 			//	...
-			$this->_DB->Insert($insert);
+			$_DB->Insert($insert);
 		}
 
 		//	...

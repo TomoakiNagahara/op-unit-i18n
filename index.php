@@ -2,7 +2,7 @@
 /**
  * unit-i18n:/index.php
  *
- * @creation  2017-07-11
+ * @created   2017-07-11
  * @version   1.0
  * @package   unit-i18n
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
@@ -10,3 +10,6 @@
  */
 //	...
 include('i18n.class.php');
+
+//	...
+OP\Unit::Instantiate('WebPack')->Auto(__DIR__.'/i18n.js');

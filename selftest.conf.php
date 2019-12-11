@@ -2,14 +2,21 @@
 /**
  * unit-i18n:/selftest.conf.php
  *
- * @creation  2018-12-04
+ * @created   2018-12-04
  * @version   1.0
  * @package   unit-i18n
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
+
+/** namespace
+ *
+ * @creation  2019-04-01
+ */
+namespace OP;
+
 //  Get i18n config.
-$config = \Env::Get('i18n');
+$config = Env::Get('i18n');
 $host     = $config['database']['host'];
 $port     = $config['database']['port'];
 $prod     = $config['database']['prod'];
@@ -32,6 +39,7 @@ $configer->DSN([
 
 //  User configuration.
 $configer->User([
+	'host'     => $host,
 	'name'     => $user,
 	'password' => $password,
 	'charset'  => $charset,
@@ -65,9 +73,9 @@ $configer->Set('table', [
 
 //  Add auto incrment id column configuration.
 $configer->Column( 'hash'        , 'char',    0, false, null , 'Hashed unique id.', ['length'=>\OP\UNIT\i18n::_hash_length_]);
-$configer->Column( 'from_lang'   , 'char',    2, false, null , 'From language code.');
+$configer->Column( 'from_lang'   , 'char',    5, false, null , 'From language code.');
 $configer->Column( 'from_country', 'char',    2, false, null , 'From country code.');
-$configer->Column( 'to_lang'     , 'char',    2, false, null , 'To language code.');
+$configer->Column( 'to_lang'     , 'char',    5, false, null , 'To language code.');
 $configer->Column( 'to_country'  , 'char',    2, false, null , 'to country code.');
 $configer->Column( 'original'    , 'text', null, false, null , 'Original string.');
 $configer->Column( 'translated'  , 'text', null, false, null , 'Translated string.');
