@@ -147,10 +147,10 @@
 				//	Replace translate result string.
 				if( doms[i].innerHTML ){
 					doms[i].innerHTML = result[i];
-				}else{
+				}else
 				if( doms[i].innerHtml ){
 					doms[i].innerHtml = result[i];
-				}else
+				}else{
 					D("Has not been set innerHtml.");
 				};
 
@@ -165,12 +165,17 @@
 
 				//	Replace each node.
 				for(let i=0; i<origin_nodes.length; i++){
-					nodes[i].innerText = origin_nodes[i].innerText;
+					if( nodes[i].innerHTML ){
+						nodes[i].innerHTML = origin_nodes[i].innerHTML;
+					}else
+					if( nodes[i].innerHtml ){
+						nodes[i].innerHtml = origin_nodes[i].innerHtml;
+					};
 				};
 			};
 		}, function(status){
 			//	...
-			D(status);
+			D('status', status);
 		});
 	};
 
