@@ -93,7 +93,7 @@
 			dom.dataset.i18n = 'false';
 
 			//	...
-			var locale = dom.dataset.locale;
+			var locale = dom.dataset.i18nLocale;
 			var string = dom.innerHTML;
 
 			//	...
@@ -103,7 +103,7 @@
 
 			//	...
 			if(!locale ){
-				D('No locale has been set this node.', dom);
+				D('Attribute "data-i18n-locale" has not been set this node.', dom);
 				continue;
 			}else if( locale !== post.from ){
 				D(`Unmatch locale. (${locale})`);
