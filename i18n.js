@@ -27,6 +27,15 @@
 		return '<?php echo $_SERVER["HTTP_HOST"] ?>';
 	};
 
+	/** Get the URL of server, used for translation.
+	 *
+	 * @created   2020-01-20
+	 * @return    string
+	 */
+	$OP.i18n.URL = function(){
+		return '<?php echo \OP\UNIT\App::URL("app:/api/i18n/") ?>';
+	};
+
 	/** Get language code list and display html.
 	 *
 	 * @created   2020-01-20
