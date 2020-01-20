@@ -212,7 +212,7 @@ class i18n implements IF_UNIT
 			$data = json_decode($json, true);
 		}else{
 			//	...
-			list($lang, $country) = explode(':', $locale);
+			list($lang, $country) = explode(':', $locale.':');
 
 			//	...
 			$data = $this->Unit( ucfirst($this->_service) )->Language($lang);
