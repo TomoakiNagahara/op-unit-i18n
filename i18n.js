@@ -96,21 +96,29 @@
 			var locale = dom.dataset.i18nLocale;
 			var string = dom.innerHTML;
 
-			//	...
-			if( post.from === null ){
-				post.from = locale;
-			};
-
-			//	...
+			//	Check dom has locale.
 			if(!locale ){
 				D('Attribute "data-i18n-locale" has not been set this node.', dom);
 				continue;
-			}else if( locale !== post.from ){
-				D(`Unmatch locale. (${locale})`);
-				continue;
-			}else{
-			//	D(locale, string);
-			};
+			}
+
+			//	Get each language code.
+			var regexp    = /^[a-z]+/i;
+			var lang_dom  = locale.match(    regexp )[0];
+			var lang_from = post.from.match( regexp )[0];
+			var lang_to   = post.to.match(   regexp )[0];
+
+			//	Check source language is unmatch.
+			if( lang_dom !== lang_from ){
+				D(lang_dom +'!=='+ lang_from);
+				continue ;
+			}
+
+			//	Check translate language is match.
+			if( lang_dom === lang_to ){
+				D(lang_dom +'==='+ lang_from);
+				continue ;
+			}
 
 			//	...
 			doms.push(dom);
