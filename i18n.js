@@ -2,7 +2,7 @@
 /**
  * app-webpack-js:/i18n.js
  *
- * @creation  2017-06-07
+ * @created   2017-06-07
  * @version   1.0
  * @package   app-skeleton
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
@@ -18,9 +18,28 @@
 	//	...
 	$OP.i18n = {};
 
-	//	...
-	$OP.i18n.Language = function(){
-		D('Has not been implemented yet.');
+	/** Get language code list and display html.
+	 *
+	 * @created   2020-01-20
+	 * @param     string       locale
+	 * @param     boolean      is_display_html
+	 * @return    object       json
+	 */
+	$OP.i18n.Language = function(locale, is_display_html){
+		//	...
+		var url  = '//' + $OP.i18n.Hostname() + $OP.i18n.URL('language');
+		var post = {};
+			post.target = 'language';
+			post.locale =  locale;
+
+		//	...
+		$OP.Ajax.Post(url, post, function(json){
+			//	...
+			D('$OP.i18n.Language',json);
+		}, function(status){
+			//	...
+			D('status', status);
+		});
 	};
 
 	//	...
