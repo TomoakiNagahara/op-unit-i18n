@@ -61,15 +61,21 @@
 	};
 
 	//	...
-	$OP.i18n.Translate = function(){
+	$OP.i18n.Translate = function(from, to){
+		//	Check of args.
+		if( !to && !from ){
+			D('Did not pass args of "from" and "to" locale.');
+			return;
+		}
+
+		//	Init.
 		var i    = 0;
-		var to   = null;
-		var from = null;
 		var dom  = null;
 		var doms = [];
 		var post = {};
-			post.to    = '<?= \OP\Env::Locale() ?>';
-			post.from  = null;
+			post.target= 'translate';
+			post.to    = to;
+			post.from  = from;
 			post.strings = [];
 
 		//	...
