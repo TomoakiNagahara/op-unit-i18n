@@ -205,6 +205,11 @@
 
 	//	...
 	document.addEventListener('DOMContentLoaded', function(){
-		$OP.i18n.Translate();
+		//	...
+		let from = "<?= $_GET['locale']['from'] ?? null ?>";
+		let to   = "<?= $_GET['locale']['to']   ?? null ?>";
+
+		//	...
+		$OP.i18n.Translate(from, to);
 	});
 })();
