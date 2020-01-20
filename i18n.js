@@ -53,7 +53,30 @@
 		//	...
 		$OP.Ajax.Post(url, post, function(json){
 			//	...
-			D('$OP.i18n.Language',json);
+			if(!is_display_html ){
+				return json.result.language;
+			};
+
+			//	...
+			var div = document.querySelector('#unit-i18n-language .language-area');
+
+			//	...
+			for(var lang of json.result.language ){
+				var code = lang.code;
+				var name = lang.name;
+				var span = document.createElement('span');
+					span.innerText = name;
+					span.classList = 'language';
+					span.dataset.i18nLocale = code;
+					div .appendChild(span);
+
+					//	...
+					span.addEventListener('click',function(){
+						var locale = this.dataset.i18nLocale;
+						D( locale );
+					});
+			};
+
 		}, function(status){
 			//	...
 			D('status', status);
