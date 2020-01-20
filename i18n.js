@@ -126,7 +126,7 @@
 		};
 
 		//	...
-		var url = 'app:/api/i18n/';
+		var url  = '//' + $OP.i18n.Hostname() + $OP.i18n.URL('translation');
 
 		//	...
 		if( post.strings.length === 0 ){
