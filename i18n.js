@@ -43,7 +43,7 @@
 	 * @param     boolean      is_display_html
 	 * @return    object       json
 	 */
-	$OP.i18n.Language = function(locale, is_display_html){
+	$OP.i18n.GetLanguageList = function(locale, is_display_html){
 		//	...
 		var url  = '//' + $OP.i18n.Hostname() + $OP.i18n.URL('language');
 		var post = {};
