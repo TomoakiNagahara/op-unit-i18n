@@ -59,6 +59,7 @@
 
 			//	...
 			var div = document.querySelector('#unit-i18n-language .language-area');
+				div.innerText = '';
 
 			//	...
 			for(var lang of json.result.language ){
@@ -67,14 +68,32 @@
 				var span = document.createElement('span');
 					span.innerText = name;
 					span.classList = 'language';
-					span.dataset.i18nLocale = code;
+					span.dataset.i18nLanguage = code;
 					div .appendChild(span);
 
-					//	...
-					span.addEventListener('click',function(){
-						var locale = this.dataset.i18nLocale;
-						D( locale );
-					});
+				//	...
+				span.addEventListener('click',function(){
+					//	Current language code.
+					var current  = localStorage.getItem(_LANGUAGE_CODE_);
+					if(!current ){
+						current = $OP.i18n.AppLanguageCode();
+					};
+
+					//	New language code.
+					var language = this.dataset.i18nLanguage;
+					localStorage.setItem(_LANGUAGE_CODE_, language);
+
+					//	Redo get language list.
+					$OP.i18n.GetLanguageList(language, true);
+
+					//	Reset i18n value.
+					while( dom = document.querySelector('[data-i18n="false"]') ){
+						dom.dataset.i18n = 'true';
+					};
+
+					//	Translate.
+					$OP.i18n.Translate(current, language);
+				});
 			};
 
 		}, function(status){
@@ -176,6 +195,9 @@
 				}else{
 					D("Has not been set innerHtml.");
 				};
+
+				//	Overwrite data-i18n-locale value.
+				doms[i].dataset.i18nLocale = post.to;
 
 				//	Extraction "data-i18n=false".
 				var nodes = doms[i].querySelectorAll('[data-i18n=false]');
