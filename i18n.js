@@ -284,8 +284,13 @@
 	//	...
 	document.addEventListener('DOMContentLoaded', function(){
 		//	...
-		let from = "<?= $_GET['locale']['from'] ?? null ?>";
-		let to   = "<?= $_GET['locale']['to']   ?? null ?>";
+		var from = $OP.i18n.AppLanguageCode();
+		var to   = $OP.i18n.SelectedLanguageCode("<?= $_GET['locale']['to'] ?? null ?>");
+
+		//	...
+		if(!to ){
+			return;
+		}
 
 		//	...
 		$OP.i18n.Translate(from, to);
