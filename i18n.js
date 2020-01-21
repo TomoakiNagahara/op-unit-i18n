@@ -15,6 +15,13 @@
 		return;
 	};
 
+	/** local storage key name.
+	 *
+	 * @created   2020-01-20
+	 * @param     string
+	 */
+	const _LANGUAGE_CODE_ = 'op_unit_i18n_selected_language_code';
+
 	//	...
 	$OP.i18n = {};
 
