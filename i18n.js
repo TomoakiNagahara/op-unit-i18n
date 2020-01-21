@@ -36,6 +36,23 @@
 		return '<?php echo \OP\UNIT\App::URL("app:/api/i18n/") ?>';
 	};
 
+	/** Get already seleted language code.
+	 *
+	 * @created   2020-01-21
+	 * @param     string       default_language_code
+	 * @return    string       selected_language_code
+	 */
+	$OP.i18n.SelectedLanguageCode = function(default_language_code){
+		//	...
+		var language_code = localStorage.getItem(_LANGUAGE_CODE_);
+		if(!language_code ){
+			language_code = default_language_code;
+		}
+
+		//	...
+		return language_code;
+	}
+
 	/** Get language code list and display html.
 	 *
 	 * @created   2020-01-20
