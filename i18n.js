@@ -165,10 +165,13 @@
 		});
 	};
 
-	//	...
-	$OP.i18n.setLanguageCode = function(lang){
-		localStorage.setItem('$OP.i18n.language.code', lang);
-	};
+	/** Set language code to local storage.
+	 *
+	 * @param string language_code
+	 */
+	$OP.i18n.SetLanguageCode = function(lang){
+		localStorage.setItem(_LANGUAGE_CODE_, lang);
+	}
 
 	//	...
 	$OP.i18n.getLanguageCode = function(){
