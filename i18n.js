@@ -278,17 +278,12 @@
 		};
 	};
 
+	/** Do auto translate and auto display language list.
+	 *
+	 *  Just only load.
+	 */
 	document.addEventListener('DOMContentLoaded', function(){
-		//	...
-		var from = $OP.i18n.AppLanguageCode();
-		var to   = $OP.i18n.SelectedLanguageCode("<?= $_GET['locale']['to'] ?? null ?>");
-
-		//	...
-		if(!to ){
-			return;
-		}
-
-		//	...
-		$OP.i18n.Translate(from, to);
+		_auto_translate();
+		_auto_language_list();
 	});
 })();
