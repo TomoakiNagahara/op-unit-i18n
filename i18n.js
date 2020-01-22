@@ -173,14 +173,17 @@
 		localStorage.setItem(_LANGUAGE_CODE_, lang);
 	}
 
-	//	...
-	$OP.i18n.getLanguageCode = function(){
+	/** Get translate language code from URL-Query, local storage, browser.
+	 *
+	 * @return string language_code
+	 */
+	$OP.i18n.GetLanguageCode = function(){
 		//	By URL Query.
 		var lang = $OP.URL.Query.Get('lang');
 
 		//	By Web Strage.
 		if(!lang ){
-			lang = localStorage.getItem('$OP.i18n.language.code');
+			lang = localStorage.getItem(_LANGUAGE_CODE_);
 		}
 
 		//	By Browser.
