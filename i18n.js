@@ -43,15 +43,6 @@
 		return '<?php echo \OP\UNIT\App::URL("app:/api/i18n/") ?>';
 	};
 
-	/** Get app language code.
-	 *
-	 * @created   2020-01-21
-	 * @return    string       application_language_code
-	 */
-	$OP.i18n.AppLanguageCode = function(){
-		return "<?= $_GET['locale']['from'] ?? \OP\Env::Locale() ?>";
-	}
-
 	/** Get language code list and display html.
 	 *
 	 * @created   2020-01-20
