@@ -231,6 +231,53 @@
 		});
 	};
 
+	/** Display language code list.
+	 *
+	 * @created   2020-01-22
+	 * @param     array        list
+	 */
+	$OP.i18n.DisplayLanguageList = function(result){
+
+		//	Get laguage list area.
+		var div = document.querySelector('#unit-i18n-language .language-area');
+			div.innerText = '';
+
+		//	Rendering html.
+		for(var lang of result ){
+			var code = lang.code;
+			var name = lang.name;
+			var span = document.createElement('span');
+				span.innerText = name;
+				span.classList = 'language';
+				span.dataset.i18nLanguage = code;
+				div .appendChild(span);
+
+			//	Set click event to language name.
+			span.addEventListener('click',function(){
+				//	Current language code.
+				var current  = localStorage.getItem(_LANGUAGE_CODE_);
+				if(!current ){
+					current = $OP.i18n.AppLanguageCode();
+				};
+
+				//	Set selected language code.
+				var language = this.dataset.i18nLanguage;
+				$OP.i18n.GetLanguageCode(language);
+
+				//	Redo get language list.
+				$OP.i18n.GetLanguageList(language, true);
+
+				//	Reset i18n value.
+				while( dom = document.querySelector('[data-i18n="false"]') ){
+					dom.dataset.i18n = 'true';
+				};
+
+				//	Translate.
+				$OP.i18n.Translate(current, language);
+			});
+		};
+	};
+
 	document.addEventListener('DOMContentLoaded', function(){
 		//	...
 		var from = $OP.i18n.AppLanguageCode();
