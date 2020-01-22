@@ -195,7 +195,15 @@
 		return lang;
 	};
 
-	//	...
+	/** Get app language code.
+	 *
+	 * @created   2020-01-21
+	 * @return    string       application_language_code
+	 */
+	$OP.i18n.AppLanguageCode = function(){
+		return "<?= $_GET['locale']['from'] ?? \OP\Env::Locale() ?>";
+	}
+
 	document.addEventListener('DOMContentLoaded', function(){
 		//	...
 		var from = $OP.i18n.AppLanguageCode();
