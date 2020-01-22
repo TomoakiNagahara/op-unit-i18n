@@ -304,4 +304,55 @@
 		//	Translate.
 		$OP.i18n.Translate(from, to);
 	}
+
+	/** Auto display language list.
+	 *
+	 * @created  2020-01-22
+	 */
+	function _auto_language_list(){
+		//	Check init object.
+		if(!$OP.i18n || !$OP.i18n.GetLanguageList ){
+			return;
+		}
+
+		//	Check if already language code selected.
+		var language = localStorage.getItem(_LANGUAGE_CODE_);
+
+		//	If language code is not selected yet.
+		if(!language ){
+			//	Open language code selector list.
+			_open_language_list();
+		}
+
+		//	Get language code list show/hide button.
+		var button = document.querySelector('#unit-i18n-language .language-toggle');
+		if(!button ){
+			return;
+		}
+
+		//	Add show/hide button.
+		var show = button.dataset.i18nLanguageIconShow;
+		var hide = button.dataset.i18nLanguageIconHide;
+		button.innerText = language ? show: hide;
+
+		//	Add event lister to language code list open/close button.
+		button.addEventListener('click', function(event){
+			var area   = document.querySelector('#unit-i18n-language .language-area');
+			var target = event.target;
+			var current= target.innerText;
+			var show   = target.dataset.i18nLanguageIconShow;
+			var hide   = target.dataset.i18nLanguageIconHide;
+
+			//	...
+			if( current === show ){
+				//	Do hide.
+				target.innerText = hide;
+				area.classList.remove('hide');
+			}else{
+				//	Do show.
+				target.innerText = show;
+				area.classList.add('hide');
+			}
+		});
+	}
 })();
