@@ -286,4 +286,22 @@
 		_auto_translate();
 		_auto_language_list();
 	});
+
+	/** Auto translate.
+	 *
+	 * @created  2020-01-22
+	 */
+	function _auto_translate(){
+		//	Get language code.
+		var from = $OP.i18n.AppLanguageCode();
+		var to   = $OP.i18n.GetLanguageCode();
+
+		//	...
+		if(!to ){
+			return;
+		}
+
+		//	Translate.
+		$OP.i18n.Translate(from, to);
+	}
 })();
