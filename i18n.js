@@ -355,4 +355,17 @@
 			}
 		});
 	}
+
+	/** Open language selector list.
+	 *
+	 * @created  2020-01-22
+	 */
+	function _open_language_list(){
+
+		//	Get language code.
+		var language = $OP.i18n.GetLanguageCode();
+
+		//	Get language code list, And display language code list.
+		$OP.i18n.GetLanguageList(language, $OP.i18n.DisplayLanguageList);
+	}
 })();
