@@ -204,6 +204,33 @@
 		return "<?= $_GET['locale']['from'] ?? \OP\Env::Locale() ?>";
 	}
 
+	/** Get language code list and display html.
+	 *
+	 * @created   2020-01-20
+	 * @changed   2020-01-22   Separate to DisplayLanguageCode().
+	 * @param     string       locale
+	 * @param     function     success
+	 * @return    object       json
+	 */
+	$OP.i18n.GetLanguageList = function(locale, success){
+		//	Init.
+		var url  = '//' + $OP.i18n.Hostname() + $OP.i18n.URL('language');
+		var post = {};
+			post.target = 'language';
+			post.locale =  locale;
+
+		//	Fetch laguage code list.
+		$OP.Ajax.Post(url, post, function(json){
+
+			//	Execute success function.
+			success(json.result.language);
+
+		}, function(status){
+			//	...
+			D('status', status);
+		});
+	};
+
 	document.addEventListener('DOMContentLoaded', function(){
 		//	...
 		var from = $OP.i18n.AppLanguageCode();
