@@ -240,7 +240,14 @@
 
 		//	Get laguage list area.
 		var div = document.querySelector('#unit-i18n-language .language-area');
-			div.innerText = '';
+
+		//	Check if found.
+		if(!div ){
+			return;
+		}
+
+		//	Init inner text.
+		div.innerText = '';
 
 		//	Rendering html.
 		for(var lang of result ){
