@@ -350,6 +350,11 @@
 			var show   = target.dataset.i18nLanguageIconShow;
 			var hide   = target.dataset.i18nLanguageIconHide;
 
+			//	Check inner text.
+			if(!area.innerText ){
+				_open_language_list();
+			}
+
 			//	...
 			if( current === show ){
 				//	Do hide.
