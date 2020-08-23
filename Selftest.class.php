@@ -1,17 +1,15 @@
 <?php
-/**
- * unit-i18n:/Selftest.class.php
+/** op-unit-i18n:/Selftest.class.php
  *
  * @created   2018-12-04
  * @version   1.0
- * @package   unit-i18n
+ * @package   op-unit-i18n
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
 
 /** namespace
  *
- * @creation  2018-12-04
  */
 namespace OP\UNIT\I18N;
 
