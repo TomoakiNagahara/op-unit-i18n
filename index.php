@@ -1,10 +1,9 @@
 <?php
-/**
- * unit-i18n:/index.php
+/** op-unit-i18n:/index.php
  *
  * @created   2017-07-11
  * @version   1.0
- * @package   unit-i18n
+ * @package   op-unit-i18n
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
