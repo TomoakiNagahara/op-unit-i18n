@@ -219,7 +219,7 @@ class i18n implements IF_UNIT
 
 			//	...
 			if( empty($data) ){
-				Notice::Set("Data is empty.");
+				Notice::Set("Language data is empty. ($locale, $lang, $country)");
 				return [];
 			};
 
