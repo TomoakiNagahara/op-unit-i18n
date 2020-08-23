@@ -265,14 +265,20 @@
 		//	Init inner text.
 		div.innerText = '';
 
+		//	Get current language code.
+		var current = $OP.i18n.GetLanguageCode();
+
 		//	Rendering html.
 		for(var lang of result ){
 			var code = lang.code;
 			var name = lang.name;
 			var span = document.createElement('span');
 				span.innerText = name;
-				span.classList = 'language';
 				span.dataset.i18nLanguage = code;
+				span.classList.add('language');
+				if( code === current ){
+					span.classList.add('current');
+				}
 				div .appendChild(span);
 
 			//	Set click event to language name.
@@ -285,10 +291,13 @@
 
 				//	Set selected language code.
 				var language = this.dataset.i18nLanguage;
-				$OP.i18n.GetLanguageCode(language);
+				$OP.i18n.SetLanguageCode(language);
 
 				//	Redo get language list.
+				/*
 				$OP.i18n.GetLanguageList(language, true);
+				*/
+				_open_language_list();
 
 				//	Reset i18n value.
 				while( dom = document.querySelector('[data-i18n="false"]') ){
