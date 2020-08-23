@@ -184,19 +184,29 @@
 	 * @return string language_code
 	 */
 	$OP.i18n.GetLanguageCode = function(){
-		//	By URL Query.
-		var lang = $OP.URL.Query.Get('lang');
-
-		//	By Web Strage.
-		if(!lang ){
-			lang = localStorage.getItem(_LANGUAGE_CODE_);
-		}
-
-		//	By Browser.
-		if(!lang ){
-			lang = (navigator.browserLanguage || navigator.language || navigator.userLanguage);
-		}
-
+		//	...
+		var lang = null;
+		
+		//	URL Query.
+		if( lang = $OP.URL.Query.Get('lang') ){
+			return lang;
+		};
+		
+		//	Web Strage.
+		if( lang = localStorage.getItem(_LANGUAGE_CODE_) ){
+			return lang;
+		};
+		
+		//	G11n. G11n locale is saved in the Cookie.
+		if( lang = "<?= \OP\Cookie::Get('locale') ?>" ){
+			return lang;
+		};
+		
+		//	Browser.
+		if( lang = (navigator.browserLanguage || navigator.language || navigator.userLanguage) ){
+			return lang;
+		};
+		
 		//	...
 		return lang;
 	};
