@@ -1,17 +1,16 @@
 <?php
-/**
- * unit-i18n:/selftest.conf.php
+/** op-unit-i18n:/selftest.conf.php
  *
  * @created   2018-12-04
  * @version   1.0
- * @package   unit-i18n
+ * @package   op-unit-i18n
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
 
 /** namespace
  *
- * @creation  2019-04-01
+ * @created   2019-04-01
  */
 namespace OP;
 
