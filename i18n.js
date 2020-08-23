@@ -1,10 +1,9 @@
 
-/**
- * app-webpack-js:/i18n.js
+/** op-unit-i18n:/i18n.js
  *
  * @created   2017-06-07
  * @version   1.0
- * @package   app-skeleton
+ * @package   op-unit-i18n
  * @author    Tomoaki Nagahara <tomoaki.nagahara@gmail.com>
  * @copyright Tomoaki Nagahara All right reserved.
  */
