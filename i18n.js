@@ -119,6 +119,12 @@
 		//	...
 		$OP.Ajax.Post(url, post, function(json){
 			//	...
+			if(!json || !json.result || !json.result.translate ){
+				D(json);
+				return;
+			}
+
+			//	...
 			var result = json.result.translate;
 			var len    = result ? result.length: 0;
 
